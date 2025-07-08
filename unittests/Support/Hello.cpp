@@ -21,7 +21,7 @@ TEST(Hello, MessageValidation) {
     std::string message = "Hello from clice!";
     EXPECT_TRUE(message.starts_with("Hello"));
     EXPECT_TRUE(message.ends_with("!"));
-    EXPECT_EQ(message.length(), 18);
+    EXPECT_EQ(message.length(), 17);
 }
 
 }  // namespace
