@@ -31,6 +31,15 @@ cl::opt<std::string> resource_dir(
     cl::value_desc("path"),
     cl::desc(R"(The path of the clang resource directory, default is "../../lib/clang/version")"));
 
+cl::opt<bool> hello_option(
+    "hello",
+    cl::cat(category),
+    cl::desc("Print a hello message and exit"));
+
+void printHello(llvm::raw_ostream& os) {
+    os << "Hello from clice!\n";
+}
+
 void printVersion(llvm::raw_ostream& os) {
     os << std::format("clice version: {}\n", clice::config::version)
        << std::format("llvm version: {}\n", clice::config::llvm_version);
@@ -46,6 +55,12 @@ bool checkArguments(int argc, const char** argv) {
     cl::ParseCommandLineOptions(argc,
                                 argv,
                                 "clice is a new generation of language server for C/C++");
+
+    // Handle hello option
+    if(hello_option) {
+        printHello(llvm::outs());
+        return false; // Exit gracefully
+    }
 
     for(int i = 0; i < argc; ++i) {
         log::info("argv[{}] = {}", i, argv[i]);
